@@ -8,6 +8,12 @@ SHARED_LIBS =		python3.12 0.0
 VERSION_SPEC =		>=3.12,<3.13
 PORTROACH =		limit:^3\.12
 
+# ---
+# The necessary bits to build these optional modules were not found:
+# _curses_panel         ossaudiodev           spwd
+# ---
+# _curses_panel is a regression; check autoconf
+
 AUTOCONF_VERSION =	2.71
 
 CONFIGURE_ENV +=	ac_cv_working_openssl_hashlib=yes \
