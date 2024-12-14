@@ -135,6 +135,7 @@ pre-build:
 	${SUBST_CMD} ${CHROMESRC}/build/gn_run_binary.py \
 		${CHROMESRC}/v8/tools/run.py \
 		${CHROMESRC}/tools/protoc_wrapper/protoc_wrapper.py
+	rm -r ${CHROMESRC}/tools/grit/third_party/six
 
 pre-fake:
 # Fix version mismatches for CMake

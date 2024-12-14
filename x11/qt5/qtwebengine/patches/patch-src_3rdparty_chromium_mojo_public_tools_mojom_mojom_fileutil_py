@@ -1,0 +1,14 @@
+Fix build with Python 3.12
+https://www.linuxfromscratch.org/~ken/fontconfig-systemd/x/qtwebengine.html
+
+Index: src/3rdparty/chromium/mojo/public/tools/mojom/mojom/fileutil.py
+--- src/3rdparty/chromium/mojo/public/tools/mojom/mojom/fileutil.py.orig
++++ src/3rdparty/chromium/mojo/public/tools/mojom/mojom/fileutil.py
+@@ -3,7 +3,6 @@
+ # found in the LICENSE file.
+ 
+ import errno
+-import imp
+ import os.path
+ import sys
+ 

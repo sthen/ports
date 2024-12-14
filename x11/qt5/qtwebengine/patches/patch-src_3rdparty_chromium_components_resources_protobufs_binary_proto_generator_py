@@ -1,0 +1,27 @@
+Fix build with Python 3.12
+https://www.linuxfromscratch.org/~ken/fontconfig-systemd/x/qtwebengine.html
+
+Index: src/3rdparty/chromium/components/resources/protobufs/binary_proto_generator.py
+--- src/3rdparty/chromium/components/resources/protobufs/binary_proto_generator.py.orig
++++ src/3rdparty/chromium/components/resources/protobufs/binary_proto_generator.py
+@@ -21,7 +21,7 @@ PY34 = sys.version_info[0:2] >= (3, 4)
+ if PY34:
+   from importlib import util as imp_util
+ else:
+-  import imp
++  import importlib.util
+ 
+ class GoogleProtobufModuleImporter:
+   """A custom module importer for importing google.protobuf.
+@@ -79,7 +79,10 @@ class GoogleProtobufModuleImporter:
+       spec.loader.exec_module(loaded)
+ 
+     else:
+-      return imp.load_source(fullname, filepath)
++      spec = importlib.util.spec_from_file_location(fullname, filepath)
++      mod = importlib.util.module_from_spec(spec)
++      spec.loader.exec_module(mod)
++      return mod
+ 
+     return loaded
+ 
