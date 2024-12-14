@@ -4,11 +4,12 @@ V=			3.1.12
 GH_ACCOUNT=		AcademySoftwareFoundation
 GH_PROJECT=		Imath
 GH_TAGNAME=		v${V}
+REVISION=		0
 
 MAINTAINER=		Antoine Jacoutot <ajacoutot@openbsd.org>
 
 # /!\ see symlinks creation in post-install (LIBImath-3_1_VERSION is used)
-.for solib in Imath PyImath_Python3_11
+.for solib in Imath PyImath_Python3_12
 SHARED_LIBS +=  ${solib}     2.0 # 28
 SHARED_LIBS +=  ${solib}-3_1 2.0 # 28
 .endfor
