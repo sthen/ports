@@ -5,7 +5,7 @@ CATEGORIES +=		lang/python
 
 # define the default versions
 MODPY_DEFAULT_VERSION_2 = 2.7
-MODPY_DEFAULT_VERSION_3 = 3.11
+MODPY_DEFAULT_VERSION_3 = 3.12
 
 # If switching to a new MODPY_DEFAULT_VERSION_3, say 3.x to 3.y:
 # - All ports with PLISTs that depend on the Python version number
@@ -37,7 +37,7 @@ MODPY_VERSION ?=	${MODPY_DEFAULT_VERSION_2}
 # verify if MODPY_VERSION found is correct
 .if ${MODPY_VERSION} == "2.7"
 _MODPY_SUBDIR = 2.7
-.elif ${MODPY_VERSION} == "3.11"
+.elif ${MODPY_VERSION} == "3.12"
 _MODPY_SUBDIR = 3
 .else
 ERRORS += "Fatal: unknown or unsupported MODPY_VERSION: ${MODPY_VERSION}"
@@ -165,11 +165,6 @@ _MODPY_PRE_BUILD_STEPS += ;[ -e ${WRKSRC}/${MODPY_SETUP} ] || \
 			> ${WRKSRC}/${MODPY_SETUP}; \
 			echo '*** generating minimal setup.py; consider using MODPY_PYBUILD')
 _MODPY_PRE_BUILD_STEPS += ;${MODPY_CMD} egg_info || true
-# Setuptools opportunistically picks up plugins. If it picks one up that
-# uses finalize_distribution_options (usually setuptools_scm), junking
-# that plugin will cause failure at the end of build.
-# In the absence of a targetted means of disabling this, use a big hammer:
-DPB_PROPERTIES +=	nojunk
 .elif ${MODPY_PYBUILD:L} != no
 BUILD_DEPENDS +=	devel/py-build${MODPY_FLAVOR} \
 			devel/py-installer${MODPY_FLAVOR}
@@ -216,6 +211,17 @@ _MODPY_PRE_BUILD_STEPS +=	\
 	;exec 1>&3
 MODPY_SETUPUTILS =	No
 _MODPY_USERBASE =	${WRKDIR}
+.endif
+
+.if ${MODPY_SETUPTOOLS:L} == "yes" || ${MODPY_PYBUILD:Msetuptools*}
+# Setuptools opportunistically picks up plugins. If it picks one up that
+# uses finalize_distribution_options (usually setuptools_scm), junking
+# that plugin will cause failure at the end of build.
+# In the absence of a targetted means of disabling this, use a big hammer:
+#DPB_PROPERTIES +=	nojunk
+# Unfortunately, if a "nojunk" port fails to build, no more junking will
+# take place on the node, likely resulting in running out of disk space in
+# /usr/local.
 .endif
 
 .if ${MODPY_PI:L} == "yes"
