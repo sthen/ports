@@ -12,7 +12,7 @@ MAINTAINER=		Antoine Jacoutot <ajacoutot@openbsd.org>
 SHARED_LIBS +=	Imath			0.0 # 0.0
 SHARED_LIBS +=	Imath-3_2		0.0 # 0.0
 SHARED_LIBS +=	PyImath			0.0 # 0.0
-SHARED_LIBS +=	PyImath_Python3_13-3_2	0.0 # 0.0
+SHARED_LIBS +=	PyImath_Python3_14-3_2	0.0 # 0.0
 
 CATEGORIES=		math graphics devel
 
